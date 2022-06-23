@@ -1,6 +1,7 @@
 package com.techelevator;
 
 import java.io.*;
+import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.time.LocalDateTime;
@@ -20,7 +21,7 @@ public class VendingMachine {
 
     private Map<String, Snack> inventory = new HashMap<>();
 
-    private double balance = 0;
+    private BigDecimal balance = BigDecimal.valueOf(0);
 
     public VendingMachine() {
         initializeLog();
@@ -28,7 +29,7 @@ public class VendingMachine {
         stockInventory();
     }
 
-    public double getBalance() {
+    public BigDecimal getBalance() {
         return balance;
     }
 
@@ -73,7 +74,7 @@ public class VendingMachine {
                 String[] inventoryEntry = scanner.nextLine().split("\\|");
                 String slot = inventoryEntry[0];
                 String name = inventoryEntry[1];
-                double price = Double.parseDouble(inventoryEntry[2]);
+                BigDecimal price = new BigDecimal(inventoryEntry[2]);
                 String type = inventoryEntry[3];
 
                 Snack snack;
@@ -108,10 +109,10 @@ public class VendingMachine {
 
         if (snackToPurchase.getStockAmount() < 1) {
             return "SOLD OUT";
-        } else if (balance < snackToPurchase.getSnackPrice()) {
+        } else if (balance.compareTo(snackToPurchase.getSnackPrice()) < 0) {
             return INSUFFICIENT_FUNDS;
         } else {
-            double newBalance = balance - snackToPurchase.getSnackPrice();
+            BigDecimal newBalance = balance.subtract(snackToPurchase.getSnackPrice());
             logAction(snackToPurchase.getSnackName() + " " + slot, balance, newBalance);
             addToSalesReport(snackToPurchase.getSnackName());
             snackToPurchase.decrementStock();
@@ -120,8 +121,8 @@ public class VendingMachine {
         }
     }
 
-    public double insertMoney(int dollarAmount) {
-        double newBalance = balance + dollarAmount;
+    public BigDecimal insertMoney(int dollarAmount) {
+        BigDecimal newBalance = balance.add(BigDecimal.valueOf(dollarAmount));
         logAction("FEED MONEY:", balance, newBalance);
         balance = newBalance;
         return balance;
@@ -129,7 +130,7 @@ public class VendingMachine {
 
     public String finishTransaction() {
 
-        double changeAmount = balance;
+        BigDecimal changeAmount = balance;
         int quarterCount = 0;
         int dimeCount = 0;
         int nickelCount = 0;
@@ -137,18 +138,18 @@ public class VendingMachine {
         String dimesMessage = "";
         String nickelsMessage = "";
 
-        while (balance >= 0.24999) {  // balance >= 0.25
+        while (balance.compareTo(BigDecimal.valueOf(0.25)) >= 0) {  // balance >= 0.25
             quarterCount++;
-            balance -= 0.25;
+            balance = balance.subtract((BigDecimal.valueOf(0.25)));
 
         }
-        while (balance >= 0.09999) {  // balance >= 0.10
+        while (balance.compareTo(BigDecimal.valueOf(0.10)) >= 0) {  // balance >= 0.10
             dimeCount++;
-            balance -= 0.10;
+            balance = balance.subtract((BigDecimal.valueOf(0.10)));
         }
-        while (balance >= 0.04999) {  // balance >= 0.05
+        while (balance.compareTo(BigDecimal.valueOf(0.05)) >= 0) {  // balance >= 0.05
             nickelCount++;
-            balance -= 0.05;
+            balance = balance.subtract((BigDecimal.valueOf(0.05)));
         }
         if (quarterCount > 0) {
             quartersMessage = quarterCount == 1 ? " 1 quarter   " : quarterCount + " quarters   ";
@@ -164,7 +165,7 @@ public class VendingMachine {
         return "Please take your change: " + NumberFormat.getCurrencyInstance().format(changeAmount) + " -----> " + quartersMessage + dimesMessage + nickelsMessage;
     }
 
-    public void logAction(String type, double beforeBalance, double afterBalance) {
+    public void logAction(String type, BigDecimal beforeBalance, BigDecimal afterBalance) {
         try (PrintWriter writer = new PrintWriter(new FileOutputStream(LOG_FILE_PATH, true))) {
             String formattedBeforeBalance = NumberFormat.getCurrencyInstance().format(beforeBalance);
             String formattedAfterBalance = NumberFormat.getCurrencyInstance().format(afterBalance);

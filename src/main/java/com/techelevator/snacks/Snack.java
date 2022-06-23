@@ -1,14 +1,15 @@
 package com.techelevator.snacks;
 
+import java.math.BigDecimal;
 import java.text.NumberFormat;
 import java.util.Objects;
 
 public abstract class Snack {
     private String snackName;
-    private double snackPrice;
+    private BigDecimal snackPrice;
     private int stockAmount = 5;
 
-    public Snack(String snackName, double snackPrice) {
+    public Snack(String snackName, BigDecimal snackPrice) {
         this.snackName = snackName;
         this.snackPrice = snackPrice;
     }
@@ -21,11 +22,11 @@ public abstract class Snack {
         this.snackName = snackName;
     }
 
-    public double getSnackPrice() {
+    public BigDecimal getSnackPrice() {
         return snackPrice;
     }
 
-    public void setSnackPrice(double snackPrice) {
+    public void setSnackPrice(BigDecimal snackPrice) {
         this.snackPrice = snackPrice;
     }
 
@@ -38,9 +39,9 @@ public abstract class Snack {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Snack)) return false;
+        if (o == null || getClass() != o.getClass()) return false;
         Snack snack = (Snack) o;
-        return Double.compare(snack.snackPrice, snackPrice) == 0 && snackName.equals(snack.snackName) && this.stockAmount == snack.stockAmount;
+        return stockAmount == snack.stockAmount && Objects.equals(snackName, snack.snackName) && Objects.equals(snackPrice, snack.snackPrice);
     }
 
     @Override

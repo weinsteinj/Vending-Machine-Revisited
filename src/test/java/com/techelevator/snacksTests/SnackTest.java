@@ -7,12 +7,14 @@ import com.techelevator.snacks.Gum;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.math.BigDecimal;
+
 public class SnackTest {
 
     @Test
     public void get_snack_message_candy_returns_munch_munch_yum() {
         //arrange
-        Candy snickers = new Candy("", 0.0);
+        Candy snickers = new Candy("", BigDecimal.valueOf(0.0));
 
         //act
         String actualMessage = snickers.getSnackMessage();
@@ -24,7 +26,7 @@ public class SnackTest {
     @Test
     public void get_snack_message_chip_returns_munch_munch_yum() {
         //arrange
-        Chip lays = new Chip("", 0.0);
+        Chip lays = new Chip("", BigDecimal.valueOf(0.0));
 
         //act
         String actualMessage = lays.getSnackMessage();
@@ -36,7 +38,7 @@ public class SnackTest {
     @Test
     public void get_snack_message_drink_returns_glug_glug_yum() {
         //arrange
-        Drink sevenUp = new Drink("", 0.0);
+        Drink sevenUp = new Drink("", BigDecimal.valueOf(0.0));
 
         //act
         String actualMessage = sevenUp.getSnackMessage();
@@ -47,7 +49,7 @@ public class SnackTest {
     @Test
     public void get_snack_message_gum_returns_chew_chew_yum() {
         //arrange
-        Gum bazooka = new Gum("", 0.0);
+        Gum bazooka = new Gum("", BigDecimal.valueOf(0.0));
 
         //act
         String actualMessage = bazooka.getSnackMessage();

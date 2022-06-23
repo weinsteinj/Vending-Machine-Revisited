@@ -4,6 +4,7 @@ import com.techelevator.snacks.Snack;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.math.BigDecimal;
 import java.text.NumberFormat;
 import java.util.*;
 import java.util.Scanner;
@@ -134,7 +135,7 @@ public class UserInterface {
                     purchaseMenu();
                     return;
                 } else if ((dollarAmount == 1 || dollarAmount == 5 || dollarAmount == 10 || dollarAmount == 20)) {
-                    double newBalance = vendingMachine.insertMoney(dollarAmount);
+                    BigDecimal newBalance = vendingMachine.insertMoney(dollarAmount);
                     System.out.println();
                     System.out.println("New balance: " + NumberFormat.getCurrencyInstance().format(newBalance));
                 } else {

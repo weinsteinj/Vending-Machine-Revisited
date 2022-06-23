@@ -1,12 +1,14 @@
 package com.techelevator;
 
 import com.techelevator.snacks.*;
+import org.junit.*;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
@@ -27,14 +29,14 @@ public class VendingMachineTest {
     @Test
     public void StockInventory_puts_A1_PotatoCrisps_3_05_Chip() {
         Snack actual = vendingMachine.getInventory().get("A1");
-        Chip expected = new Chip("Potato Crisps", 3.05);
+        Chip expected = new Chip("Potato Crisps", BigDecimal.valueOf(3.05));
         Assert.assertEquals(actual, expected);
     }
 
     @Test
     public void StockInventory_puts_C1_Cola_1_25_Drink() {
         Snack actual = vendingMachine.getInventory().get("C1");
-        Drink expected = new Drink("Cola", 1.25);
+        Drink expected = new Drink("Cola", BigDecimal.valueOf(1.25));
         Assert.assertEquals(actual, expected);
     }
 
@@ -50,10 +52,10 @@ public class VendingMachineTest {
     @Test
     public void purchaseSnack_does_not_change_balance_given_C3_with_1_00_balance() {
         vendingMachine.insertMoney(1);
-        double expected = vendingMachine.getBalance();
+        BigDecimal expected = vendingMachine.getBalance();
         String message = vendingMachine.purchaseSnack("C1");
-        double actual = vendingMachine.getBalance();
-        Assert.assertEquals(actual, expected, 0.001);
+        BigDecimal actual = vendingMachine.getBalance();
+        Assert.assertEquals(actual, expected);
     }
 
     @Test
@@ -78,9 +80,9 @@ public class VendingMachineTest {
     public void purchaseSnack_gives_0_05_change_given_D2_with_1_00_balance() {
         vendingMachine.insertMoney(1);
         String message = vendingMachine.purchaseSnack("D2");
-        double actual = vendingMachine.getBalance();
-        double expected = 0.05;
-        Assert.assertEquals(expected, actual, 0.001);
+        BigDecimal actual = vendingMachine.getBalance();
+        BigDecimal expected = BigDecimal.valueOf(0.05);
+        Assert.assertEquals(expected, actual);
     }
 
     @Test
@@ -95,17 +97,18 @@ public class VendingMachineTest {
 
     @Test
     public void insertMoney_returns_5_00_given_5_00() {
-        double actual = vendingMachine.insertMoney(5);
-        double expected = 5.0;
-        Assert.assertEquals(actual, expected, 0.001);
+        BigDecimal actual = vendingMachine.insertMoney(5);
+        BigDecimal expected = BigDecimal.valueOf(5);
+        Assert.assertEquals(expected, actual);
     }
 
     @Test
     public void insertMoney_changes_balance_to_5_00_given_5_00() {
         vendingMachine.insertMoney(5);
-        double actual = vendingMachine.getBalance();
-        double expected = 5.0;
-        Assert.assertEquals(actual, expected, 0.001);
+        BigDecimal actual = vendingMachine.getBalance();
+        BigDecimal expected = BigDecimal.valueOf(5);
+        Assert.assertEquals(expected, actual);
+
     }
 
     @Test

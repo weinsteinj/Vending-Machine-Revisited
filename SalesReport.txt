@@ -1,4 +1,4 @@
-Potato Crisps|4
+Potato Crisps|8
 Stackers|0
 Grain Waves|0
 Cloud Popcorn|0
@@ -7,14 +7,14 @@ Moonpie|0
 Cowtales|0
 Wonka Bar|0
 Crunchie|0
-Klik Bar|8
-Cola|5
+Klik Bar|10
+Cola|10
 Dr. Salt|0
-Mountain Melter|1
+Mountain Melter|2
 Heavy|0
-Diet Cola|7
+Diet Cola|9
 U-Chews|1
-Little League Chew|2
+Little League Chew|5
 Chiclets|0
 Triplemint|0
 Baseball Gum|0
@@ -22,4 +22,4 @@ Mini Granola|0
 Granola Bars|0
 Oatmeal|0
 Nutty Fruit Bar|0
-Granola Mix|6
+Granola Mix|8
